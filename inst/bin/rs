@@ -1,0 +1,16 @@
+#!/bin/bash
+# Shell entry point for modelstats::commandLineInterface
+#
+# Installed by R CMD INSTALL at:
+#   <libpath>/modelstats/bin/rs
+#
+# Resolves its own library path from script location so it works regardless of
+# cwd or whether the calling shell has REMIND's renv active. Symlink into PATH
+# (e.g. /usr/local/bin/rs -> .../modelstats/bin/rs) and call as `rs [args]`.
+
+set -e
+SELF="$(readlink -f "$0")"
+# <libpath>/modelstats/bin/rs  ->  <libpath>
+LIBPATH="$(dirname "$(dirname "$(dirname "$SELF")")")"
+export R_LIBS="$LIBPATH"
+exec Rscript -e 'modelstats::commandLineInterface(commandArgs(trailingOnly=TRUE))' "$@"

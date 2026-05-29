@@ -1,0 +1,2 @@
+inst/bin/rs text eol=lf
+inst/bin/* text eol=lf
